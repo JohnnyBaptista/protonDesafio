@@ -6,28 +6,29 @@ module.exports = {
 
 		const regMusics = await Music.find({}, (err, musics) => {
 			const musicsMap = {};
-
+			
 			musics.forEach((music) => {
 				musicsMap[music._id] = music;
 			});
 			return musicsMap;
 		});
-		return res.status(200).json(regMusics);
+		console.log(regMusics)
+		
+		res.render('musicas', { data: regMusics });
 	},
-
-	async store(req, res){
-		const { name, author, path } = req.body;
-		const musicRegistered = await Music.findOne({ name });
-
-		if(musicRegistered) return res.json(musicRegistered);
-
+ 
+	async store(upload){
+		const { name, size, key, path, author } = upload;
+		
 		const regMusic = await Music.create({
 			name,
+			size,
+			key,
 			author,
 			path,
 		});
-
-		return res.json(regMusic);
+		console.log({ regMusic });
+		return regMusic;
 	},
 
 	async patch(req, res){
@@ -57,7 +58,16 @@ module.exports = {
 			if(err) return res.status(400).json({error: err});
 			return response;
 		});
-		return res.json({message: `Music Deleted`}); // o q fazer?
+		return res.json({message: `Music Deleted`}); 
 	},
+
+	async get(req, res){
+		const { musicID } = req.params;
+		const targetMusic = await Music.findById(musicID);
+		if(!targetMusic) return res.status(400).json({error: 'Music not found!'});
+		
+		res.render('musica', { data: targetMusic })
+		
+	}
 
 }

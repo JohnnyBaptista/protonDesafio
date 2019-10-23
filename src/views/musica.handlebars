@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row">
+        <div class="musicInfos">
+            <div class="info">
+                <h4>Nome da Música: {{data.name}}</h4>
+            </div>
+            <div class="info">
+                <h4>Autor: {{data.author}}</h4>
+            </div>
+            <div class="info">
+                <h4>Situação:</h4>
+                {{#if data.approved }}
+                    <h5>Aprovado!</h5>
+                {{else if data.disapproved }}
+                    <h5>Reprovado!</h5>
+                {{else}}
+                <form action="/approve/{{data._id}}" method="POST">
+                    <h5>Aprovar <button type="submit"><i class="fa fa-thumbs-up"></i></button></h5>
+                </form>
+                <form action="/disapprove/{{data._id}}" method="POST">
+                    <h5>Reprovar <button type="submit"><i class="fa fa-thumbs-down"></i></button></h5>
+                </form>
+                {{/if}} 
+            </div>
+        </div>
+    </div>
+</div>

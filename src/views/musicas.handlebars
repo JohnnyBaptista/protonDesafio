@@ -1,0 +1,28 @@
+<br>
+<div class="container">
+    <h2 class="toAnalyze">Trilhas para análise</h2>
+    <table class="table table-dark-light">
+        <thead>
+            <tr>
+                <th scope="col">Áudio</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Criado em</th>
+                <th scope="col">Mais detalhes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            {{#unless approved}}
+                {{#unless disapproved}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{author}}</td>
+                        <td>{{createdAt}}</td>
+                        <td><a href="/musics/{{_id}}"><i class="fa fa-info-circle"></i></a></td>
+                    </tr>
+                {{/unless}}
+            {{/unless}}
+            {{/each}}
+        </tbody>
+    </table>
+</div>

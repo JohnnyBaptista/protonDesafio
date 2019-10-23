@@ -23,13 +23,23 @@ module.exports = {
 	async store(req, res){
 		const { user, password, type } = req.body;
 
-		const regUsers = await User.create({
-			user,
-			password,
-			type,
-		});
+		try{
+			if(await User.findOne({ user })) return res.json({error: "User already exists!"});
 
-		return res.json(regUsers)
+			const regUsers = await User.create({
+				user,
+				password,
+				type,
+			});
+
+			regUsers.password = undefined; 
+
+			res.render('formulario', { regUsers });
+			return res.status(200).json(regUsers);
+		}catch(err) {
+			return res.status(400).json({error: 'Registration Failed!'});
+		}
+
 	}
 
 }

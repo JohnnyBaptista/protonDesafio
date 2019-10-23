@@ -9,10 +9,9 @@ const MusicSchema = new Schema ({
 		type: String,
 		required: true,
 	},
-	path: {
-		type: String,
-		required: true,
-	},
+	path: String,
+	key: String,
+	size: Number,
 	approved: {
 		type: Boolean,
 		default: false,

@@ -1,5 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const handlebars = require('express-handlebars')
+const path = require('path');
+const morgan = require('morgan');
 
 const routes = require('./routes');
 
@@ -11,8 +14,20 @@ mongoose.connect('mongodb+srv://johnnybaptista:j05020598p@testesmongo-wutm3.mong
 	useUnifiedTopology: true,
 });
 
+app.engine('handlebars', handlebars({
+	defaultLayout: 'main',
+	extname: 'handlebars',
+	layoutsDir: 'src/views/layouts',
+}));
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'handlebars');
+
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+
 app.use(routes);
 
 
