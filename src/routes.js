@@ -20,7 +20,8 @@ routes.post('/users', UserController.store);
 
 routes.get('/musics', MusicController.index);
 routes.get('/musics/:musicID', MusicController.get);
-routes.post('/musics', multer(multerConfig).single('file'), (req, res) => {
+routes.post('/musics', multer(multerConfig).single('file'), async (req, res) => {
+	
 	const { originalname: name, size, filename: key } = req.file;
 	const { author } = req.body;
 	const upload = {
@@ -30,8 +31,10 @@ routes.post('/musics', multer(multerConfig).single('file'), (req, res) => {
 		path: '',
 		author
 	}
-	const response = MusicController.store(upload);
-    return res.json(response);
+	
+	const response = await MusicController.store(upload);
+	console.log(response);
+	res.redirect('/musics');
 });
 routes.patch('/musics/:musicID', MusicController.patch);
 routes.delete('/musics/:musicID', MusicController.delete);
