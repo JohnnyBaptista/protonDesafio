@@ -12,7 +12,6 @@ module.exports = {
 			});
 			return musicsMap;
 		});
-		console.log(regMusics)
 		
 		res.render('musicas', { data: regMusics });
 	},
@@ -27,13 +26,13 @@ module.exports = {
 			author,
 			path,
 		});
-		console.log({ regMusic });
+
 		return regMusic;
 	},
 
 	async patch(req, res){
 		const { musicID } = req.params;
-		const { name, author, path } = req.body;
+		const { name, author } = req.body;
 
 		const targetMusic = await Music.findById(musicID);
 
@@ -43,12 +42,12 @@ module.exports = {
 
 		targetMusic.name = name;
 		targetMusic.author = author;
-		targetMusic.path = path;
+
 
 		await targetMusic.save();
 
-		return res.status(200).json(targetMusic);
-
+		// return res.status(200).json(targetMusic);
+		res.redirect('/musics');
 	},
 
 	async delete(req, res){
@@ -58,7 +57,8 @@ module.exports = {
 			if(err) return res.status(400).json({error: err});
 			return response;
 		});
-		return res.json({message: `Music Deleted`}); 
+		// return res.json({message: `Music Deleted`}); 
+		res.redirect('/musics');
 	},
 
 	async get(req, res){
