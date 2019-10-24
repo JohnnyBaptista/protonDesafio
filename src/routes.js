@@ -20,15 +20,16 @@ routes.post('/users', UserController.store);
 
 routes.get('/musics', MusicController.index);
 routes.get('/musics/:musicID', MusicController.get);
+routes.get('/musics/download/:musicID', MusicController.download);
 routes.post('/musics', multer(multerConfig).single('file'), async (req, res) => {
 	
-	const { originalname: name, size, filename: key } = req.file;
+	const { originalname: name, size, filename: key, path } = req.file;
 	const { author } = req.body;
 	const upload = {
 		name,
 		size,
 		key,
-		path: '',
+		path,
 		author
 	}
 	

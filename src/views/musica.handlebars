@@ -15,12 +15,15 @@
                     <h5>Reprovado!</h5>
                 {{else}}
                 <form action="/approve/{{data._id}}" method="POST">
-                    <h5>Aprovar <button type="submit"><i class="fa fa-thumbs-up"></i></button></h5>
+                    <h5>Aprovar <button type="submit" class="btn btn-success"><i class="fa fa-thumbs-up"></i></button></h5>
                 </form>
                 <form action="/disapprove/{{data._id}}" method="POST">
-                    <h5>Reprovar <button type="submit"><i class="fa fa-thumbs-down"></i></button></h5>
+                    <h5>Reprovar <button type="submit" class="btn btn-danger"><i class="fa fa-thumbs-down"></i></button></h5>
                 </form>
-                {{/if}} 
+                {{/if}}
+                <form action="/musics/download/{{data._id}}" method="GET">
+                    <h5>Download <button type="submit" class="btn btn-primary">Download</button></h5>
+                </form>
             </div>
         </div>
     </div>

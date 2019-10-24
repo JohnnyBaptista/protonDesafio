@@ -68,6 +68,15 @@ module.exports = {
 		
 		res.render('musica', { data: targetMusic })
 		
-	}
+	},
+	
+	async download(req, res){
+		const { musicID } = req.params;
+		const targetMusic = await Music.findById(musicID);
+		if(!targetMusic) return res.status(400).json({error: 'Music not found!'});
+
+		res.download(targetMusic.path);
+		
+	},
 
 }
