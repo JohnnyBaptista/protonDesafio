@@ -35,6 +35,7 @@ module.exports = {
 
 		await targetMusic.save();
 
-		return res.status(200).json(targetMusic);
+		// return res.status(200).json(targetMusic);
+		res.redirect('/musics');
 	}
 }
