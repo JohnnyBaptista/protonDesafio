@@ -21,22 +21,24 @@ module.exports = {
 	},
 
 	async store(req, res){
-		const { user, password, type } = req.body;
+		const { username, password, type, email } = req.body;
 
 		try{
-			if(await User.findOne({ user })) return res.json({error: "User already exists!"});
+			if(await User.findOne({ username })) return res.json({error: "User already exists!"});
 
 			const regUsers = await User.create({
-				user,
+				username,
 				password,
 				type,
+				email,
 			});
 
 			regUsers.password = undefined; 
-
-			res.render('formulario', { regUsers });
+			const token = generateToken({id: regUsers._id, isAdmin: regUsers.isAdmin});
+			// res.render('formulario', { regUsers, token });
 			return res.status(200).json(regUsers);
 		}catch(err) {
+			console.log(err);
 			return res.status(400).json({error: 'Registration Failed!'});
 		}
 

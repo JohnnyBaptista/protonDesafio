@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const authMiddleware = require('./middlewares/auth'); 
 
 const multerConfig = require('./config/multer');
 const { UserController, 
@@ -15,8 +16,12 @@ routes.get('/', (req, res) => {
 	res.render('formulario');
 });
 
+routes.post('/authenticate', AuthenticateController.index);
+
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
+
+routes.use(authMiddleware);
 
 routes.get('/musics', MusicController.index);
 routes.get('/musics/:musicID', MusicController.get);
@@ -45,7 +50,6 @@ routes.post('/approve/:musicID', ApproveController.store);
 routes.get('/disapprove', DisapproveController.index);
 routes.post('/disapprove/:musicID', DisapproveController.store);
 
-routes.post('/authenticate', AuthenticateController.index);
 
 routes.get('/upload', (req, res) => {
 	res.render('upload');
